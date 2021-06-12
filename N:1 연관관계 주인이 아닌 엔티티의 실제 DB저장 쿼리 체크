@@ -1,6 +1,8 @@
 #Member&Team /N:1연관관계 맵핑에서 JPA DATA 쿼리 날리는거 확인할때 연관관계 주인이 아닌 TEAM에는 쿼리가 날라가지 않으며 member13.getTeam()를 통해 확인할수 있다
-# 이것을 해결하기 위해 changeTeam에서 team.getMembers().add(this); 이부분이 중요하게 된다 getTeam을 하고 flush,close를 하여 영속성컨테이너를 db에 저장및 비워주면 정상적으로 데이터가 들어간 것을 확인할수 있다.! 유레카! ㅋㅋ.
-#Member
+# 이것을 해결하기 위해 changeTeam에서 team.getMembers().add(this); 이부분이 중요하게 된다 getTeam을 하고 flush,close를 하여 영속성컨테이너를 db에 저장및 
+# 비워주면 정상적으로 데이터가 들어간 것을 확인할수 있다.! 유레카! ㅋㅋ.
+
+###Member
 @Entity
 @Getter
 @Setter
@@ -47,7 +49,7 @@ public class Member {
     }*/
 }
 
-#Team
+###Team
 
 @Entity
 @Getter
@@ -71,7 +73,7 @@ public class Team {
     }
 }
 
-#tdd
+###tdd
 @Test
     public void chodong() throws Exception{
         //given
