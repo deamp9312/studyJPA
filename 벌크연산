@@ -14,8 +14,8 @@ int bulkAgePlus(@Param("age")int age);
 
         //when /bulk를 사용하면 영속성 컨텍스트에 저장되는 것을 건너띄우고 db에 강제로 저장하는 느낌
         int resultCount = memberRepository.bulkAgePlus(20);
-        em.flush();
-        em.clear(); //이 2개를 통해 영속성 컨텍스트에 남은거 지워줌
+        em.flush(); // 영속성데이터가 변경시에 db에 변경감지를 통해 update를 해주는데 실제로 벌크는 컨텍스트에 영향을 주지 않앗기에 update가 되지않아 컨텍스트에 저장된40의 값이 저장되지 않음
+        em.clear(); // 영속성 컨텍스트를 비워줌
 
         List<Member> result = memberRepository.findByUsername("member5");
         Member member5 = result.get(0);
