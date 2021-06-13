@@ -1,4 +1,4 @@
-@Modifying      
+@Modifying //(clearAutomatically = true) 혹은 해당기능을 사용하면 영속성컨텍스트를 지워준다!       
 @Query("update Member m set m.age = m.age +1 where m.age >= :age")
 int bulkAgePlus(@Param("age")int age);
 
