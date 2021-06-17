@@ -1,0 +1,23 @@
+# studyJPA
+
+해당 클레스가 언제 누군가에 의해 작성이 되었는지 파악하기 위한 기능중 하나로 해당 클레스를 extends를 통해 db에 만든 시간과 업데이트 시간을 기록하게 해준다..
+
+
+@Column(updatable = false)//createDate 는 변경하지 못 하게 막아놓음.
+    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
+
+
+    @PrePersist
+    public void prePersist(){
+        LocalDateTime now = LocalDateTime.now();
+        this.createDate = now;
+        this.updateDate = now;
+
+    }
+    @PreUpdate
+    public void preUpdate(){
+        this.updateDate = LocalDateTime.now();
+    }
+
+
