@@ -1,0 +1,27 @@
+해당 파일이 만들어진,마지막으로수정된,누구에 의해 생성된,마지막 수정자를 기록하는 기능으로 기능이 필요한 클레스에 extends 상속을 시켜 사용하면됩니다.
+
+data-jpa
+
+@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass
+@Getter
+public class BaseEntity {
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdBy;
+
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+
+
+}
+
