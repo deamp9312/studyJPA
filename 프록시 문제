@@ -1,0 +1,45 @@
+org.hibernate.LazyInitializationException: could not initialize proxy
+
+프록시란 실존하는 엔티티 객체를 가르키는 가짜 객체(?)로 c의 포인터처럼 실제 데이터가 있는곳을 가르키는 역활을 한다,
+
+예를 들어
+
+    @Autowired
+    EntityManager em;
+    
+    Name username = new = Name();
+    username.setUsername("cho");
+    em.persist(username); //영속성상태로 username을 저장한다.
+    
+    em.flush(); //db에 영속성데이터를 넘긴다
+    em.clear(); //영속성데이터를 clear(지운다)
+    
+    Name reName = em.getReference(Name.class,username.getId()); //프록시로 앞에 저장되었던 데이터와 동일한 메소드 형태를 가지며, 해당 위치를 가진다
+    
+    
+    Name findName = em.find(Name.class,username.getId()); 
+    //find를 할 경우 프록시에서 영속성컨텍스트에서 username의 id를 찾는데 앞서 조회를 프록시로 조회했기 때문에 영속성컨텍스트에는 값이 없고, 그로 인해 
+    //db로 부터 username.id를 영속성컨텍스트로 영속상태로 불러오게 되며 그때 find를 통해 실제 select쿼리가 나가게 된다.
+    
+    //하지만 위의 경우에는 reName와 findName를 ==비교에 의한 같은 값으로 반환을 jpa에 의해서 해주게 되며
+    //그로인한 reName와 findName 둘다 프록시 클래스인것을 .getClass로 확인할수 있다.
+    
+------    //이때 문제가 발생하는데 
+    
+    em.flush(); //db에 영속성데이터를 넘긴다
+    em.clear(); //영속성데이터를 clear(지운다)
+    
+    Name reName = em.getReference(Name.class,username.getId());
+    
+    reName.getUsername(); //이때도 find처럼 실제 데이터를 조회하기 위해 영속성컨텍스트(없을경우)->db->영속성컨텍스트(등록)->영속된 데이터값 참조
+    
+    //이렇게 되면 상관없지만
+    
+    중간에 영속컨텍스를 clear,close,detach(reName)등을 해 주게 될 경우 영속컨텍스트가 비게 되면서 
+    org.hibernate.LazyInitializationException: could not initialize proxy 오류를 띄우게 된다.
+    
+    
+    
+    
+
+
