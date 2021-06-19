@@ -40,6 +40,7 @@ org.hibernate.LazyInitializationException: could not initialize proxy
     
     
     
-    
+                emf.getPersistenceUnitUtil().isLoaded(reName);을 출력하면 해당 객체가 프록시 초기화 여부를 판단 할수 있다.
+
 
 
