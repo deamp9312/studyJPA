@@ -1,0 +1,50 @@
+@Entity
+
+-name 기본값으로는 클래스 이름을 사용
+
+주의 사항 : 기본 생성자 필수 , final 클래스,enum,interface,inner 클래스에는 사용할 수 없음, 저장할 필드에 final을 사용하면 안됨
+
+==============================
+
+@Table
+
+-name 매핑할 테이블 이름 (엔티티 이름을 사용)
+
+-catalog catalog 기능이 있는 데이터베이스에서 catalog를 매핑한다.
+
+-schema schema 기능이 있는 데이터베이스에서 schema를 매핑한다
+
+DDL 생성 시에 유니크 제약조건을 만든다, 2개 이상의 복합 유니크 제약조건도 만들 수 있다, 참고로 이 기능은 스키마 자동 생성 기능을 사용해서 
+
+DDL을 만들 때만 사용가능
+
+===============================
+
+@Enumerated(EnumType.STRING)
+
+private RoleType roleType;
+
+-자바의 enum을 사용해서 회원의 타입을 구분, 자바의 enum을 사용하려면 @Enumerated 어노테이션으로 매핑해야 함
+
+@Temporal(TemporalType.TIMESTAMP)
+
+private Date createdDate;
+
+-자바의 날짜 타입을 @Temporal을 사용해서 매핑한다
+
+@description
+
+-회원을 설명하는 필드는 길이 제한이 없다, 따라서 데이터베이스의 VARCHAR 타입 대신에 CLOB 타입으로 저장해야 한다, @Lob을 사용하면 
+
+CLOB,BLOB 타입을 매핑할 수 있다
+
+@Column
+
+-name = "이름"
+
+-nullable = false (not null 제약조건)
+
+-length = 10 (크기 제약 최대 10)
+
+
+
