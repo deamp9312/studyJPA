@@ -1,0 +1,19 @@
+자바 ORM 표준 JPA 프로그래밍 == 내용 중.
+
+
+조회 의 방법은 2가지 있는데
+  
+  -1. 객체 그래프 탐색(객체 연관관계를 사용한 조회)
+  -2. 객체 지향 쿼리 사용(JPQL)
+  
+  1=> 
+  Member member = em.find(Member.class,"member1");
+  
+  Team team = member.getTeam();
+  
+  2=>
+  String jpql = "select m from Member m join m.team t where t.name =:teamName";
+  
+  List<Member> result = em.createQuery(jpql,Member.class)
+  .setParameter("teamName","팀1")
+  .getResultList();
