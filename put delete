@@ -1,0 +1,141 @@
+우선 application.properties에 다음을 추가해야 get post외 사용이 가능합니다! spring.mvc.hiddenmethod.filter.enabled=true
+
+​
+
+​
+
+그 뒤에는 form에 post로 받는곳 밑에 해당 put delete을 value에 넣고 하면 잘 동작합니다!!
+
+<input type="hidden" name="_method" value="put"/>
+
+------------------
+
+​
+
+This application has no explicit mapping for /error, so you are seeing this as a fallback.
+
+Tue Oct 19 16:12:09 KST 2021
+
+There was an unexpected error (type=Internal Server Error, status=500).
+
+An error happened during template parsing (template: "class path resource [templates/boards/boardEdit.html]")
+
+org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "class path resource [templates/boards/boardEdit.html]")
+
+​
+
+밑고 같은 구성인데 오류가 나네용,,, get post maipping로 할땐 알아서 잘 돌아가던데 수정을 이용해보려고 putmapping을 사용해보려다 어케 해결해야 할지 모르겠습니다,,,,ㅠ
+
+​
+
+boards/boards.html---
+
+<td>
+
+<a href="#" th:href="@{/board/{id}/edit (id=${board.id})}"
+
+role="button">수정</a>
+
+</td>
+
+----------------------------------------------------------------------
+
+controller
+
+@GetMapping("/board/{id}/edit")
+
+public String editForm(@PathVariable("id") Long id, Model model) {
+
+Board findboard = boardService.findboard(id);
+
+BoardDto form = new BoardDto();
+
+form.setTitle(findboard.getTitle());
+
+form.setContent(findboard.getContent());
+
+model.addAttribute("form", form);
+
+return "boards/boardEdit";
+
+}
+
+​
+
+​
+
+@PutMapping("/board/{id}/edit")
+
+public String edit(@PathVariable("id") Long id,@ModelAttribute("form") BoardDto form) {
+
+Board findboard = boardService.findboard(id);
+
+findboard.setTitle(form.getTitle());
+
+findboard.setContent(form.getContent());
+
+boardService.saveBoard(findboard);
+
+return "redirect:/boards";
+
+}
+
+​
+
+​
+
+----- boardEdit.html
+
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+
+<title>게시판 리스트</title>
+
+</head>
+
+<body>
+
+<div >
+
+<form th:action="@{/board/{id}/edit (id=${board.id})}" th:object="${form}" method="post">
+
+<div >
+
+<label >제목</label>
+
+<input type="text" th:field="*{title}"
+
+placeholder="제목을 입력하세요">
+
+</div>
+
+<div >
+
+<label >내용</label>
+
+<input type="text" th:field="*{content}"
+
+placeholder="내용 입력">
+
+</div>
+
+​
+
+<button type="submit">
+
+수정</button>
+
+</form>
+
+<br/>
+
+</div>
+
+</body>
+
+</html>
