@@ -1,0 +1,12 @@
+@ToString(of = {"id","username","age"})
+
+==같은기능 위는 롬복 사용해서 밑을 만들어줌 (주의 연관관계있는 객체는 사용하면 안됨(but 사용하려면 서로 team->member->team처럼 반복되지 않게 설정하면됨))
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                '}';
+    }
