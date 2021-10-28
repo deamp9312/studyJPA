@@ -1,0 +1,20 @@
+  @PostConstruct
+    public void init(){
+        initMemberService.init();
+    }
+
+    @Component
+    static class InitMemberService{
+        @PersistenceContext
+        private EntityManager em;
+
+        @Transactional  //postconstruct와 transactional은 같이 쓸수없음 그리하여 따로 이 방법 사용
+        public void init(){
+            Team teamA = new Team("teamA");
+            Team teamB = new Team("teamB");
+            em.persist(teamA);
+            em.persist(teamB);
+
+
+            }
+        }
